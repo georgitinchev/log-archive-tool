@@ -3,12 +3,12 @@ import tarfile
 from datetime import datetime
 
 def compress_logs(log_directory):
-    # Ensure the log directory exists
+    # Ensure the irectory exists
     if not os.path.exists(log_directory):
         print(f"Error: Directory '{log_directory}' does not exist.")
         return
 
-    # Check if the log directory is empty
+    # Check if the directory is empty
     if not os.listdir(log_directory):
         print(f"Warning: Directory '{log_directory}' is empty. No logs to compress.")
         return
@@ -17,25 +17,24 @@ def compress_logs(log_directory):
     timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
     archive_name = f"logs_archive_{timestamp}.tar.gz"
 
-    # Create an archives directory if it doesn't exist
+    # Create archives directory
     archive_directory = "./archives"
     os.makedirs(archive_directory, exist_ok=True)
 
     archive_path = os.path.join(archive_directory, archive_name)
 
-    # Compress the logs into a tar.gz file
+    # Compress the logs
     with tarfile.open(archive_path, "w:gz") as tar:
         tar.add(log_directory, arcname=os.path.basename(log_directory))
 
-    # Log the archive details
+    # Log archive details
     with open("archive.log", "a") as log_file:
         log_file.write(f"{timestamp}: {archive_path}\n")
 
     print(f"Logs compressed and saved to: {archive_path}")
 
 def main():
-    # Example log directory for initial testing
-    log_directory = "/path/to/logs"  # Replace with your log directory
+    log_directory = "/path/to/logs" 
     compress_logs(log_directory)
 
 if __name__ == "__main__":
