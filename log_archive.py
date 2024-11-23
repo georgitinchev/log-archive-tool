@@ -26,7 +26,11 @@ def compress_logs(log_directory):
     # Compress the logs into a tar.gz file
     with tarfile.open(archive_path, "w:gz") as tar:
         tar.add(log_directory, arcname=os.path.basename(log_directory))
-    
+
+    # Log the archive details
+    with open("archive.log", "a") as log_file:
+        log_file.write(f"{timestamp}: {archive_path}\n")
+
     print(f"Logs compressed and saved to: {archive_path}")
 
 def main():
